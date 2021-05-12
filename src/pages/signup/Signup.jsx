@@ -56,6 +56,7 @@ const Login = () => {
         setInputErr([]);
         setloader(false);
         history.push("/home");
+        localStorage.setItem("token",response.payload.data.token)
         return alert("Signuped successfully!");
       }
       setInputErr([]);
@@ -160,7 +161,7 @@ const Login = () => {
                 <button
                   className="btn text-white btn-secondary btn-block form-control-lg"
                   onClick={() => {
-                    history.push("/");
+                    history.push("/login");
                   }}
                 >
                   Click here to login

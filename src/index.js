@@ -25,15 +25,15 @@ const persistor = persistStore(reduxStore);
 // const reduxStore = createStore(rootReducer,applyMiddleware(thunk));
 
 ReactDOM.render(
- 
+  <React.StrictMode>
     <BrowserRouter>
       <Provider store={reduxStore}>
-        <PersistGate  persistor={persistor}>
+        <PersistGate loading={null} persistor={persistor}>
           <App />
         </PersistGate>
       </Provider>
     </BrowserRouter>
- ,
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

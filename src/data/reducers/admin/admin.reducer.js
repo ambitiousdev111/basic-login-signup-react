@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   adminLoginApi,
   adminSignupApi,
+  getDataApi,
 } from "../../services/admin/admin.service";
 
 //async thunk
@@ -14,13 +15,24 @@ export const adminLoginItem = createAsyncThunk(
     if (response.isSuccessfull) {
       return response;
     }
-    return  thunkAPI.rejectWithValue(response);
+    return thunkAPI.rejectWithValue(response);
   }
 );
 export const adminSignupItem = createAsyncThunk(
   "/adminSignupItem",
   async (payload, thunkAPI) => {
     let response = await adminSignupApi(payload);
+    console.log("response: ", response);
+    if (response.isSuccessfull) {
+      return response;
+    }
+    return thunkAPI.rejectWithValue(response);
+  }
+);
+export const getDataItem = createAsyncThunk(
+  "/getDataItem",
+  async (payload, thunkAPI) => {
+    let response = await getDataApi(payload);
     console.log("response: ", response);
     if (response.isSuccessfull) {
       return response;
@@ -35,6 +47,7 @@ const adminSlice = createSlice({
     isLoggedIn: false,
     adminData: null,
     token: null,
+    userData: null,
   },
   reducers: {
     logout: (state, action) => {
@@ -55,6 +68,10 @@ const adminSlice = createSlice({
       state.adminData = action.payload.data.admin;
       state.token = action.payload.data.token;
       state.isLoggedIn = true;
+    },
+    [getDataItem.fulfilled]: (state, action) => {
+      // console.log('action.payload: ', action.payload);
+      state.userData = action.payload.data.adminData;
     },
   },
 });

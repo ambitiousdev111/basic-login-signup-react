@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, NavLink } from "react-router-dom";
-
+import { getDataItem } from "../../data/reducers/admin/admin.reducer";
 
 //component
 const Home = () => {
@@ -9,11 +9,29 @@ const Home = () => {
   const history = useHistory();
   const adminSelector = useSelector((state) => state.adminReducer);
   const adminData = useSelector((state) => state.adminReducer).adminData;
-  
+  const userData = useSelector((state) => state.adminReducer).userData;
+  console.log('userData: ', userData);
+
   // console.log("adminSelector: ", adminSelector);
   useEffect(() => {
-    return !adminSelector.isLoggedIn ? history.push("/") : null;
+    return !adminSelector.isLoggedIn ? history.push("/login") : getUserDataAPI();
   }, []);
+
+  const getUserDataAPI = async () => {
+    const token = localStorage.getItem("token");
+    const id = adminData._id;
+    try {
+      const response = await dispatch(getDataItem({token,id}));
+      console.log("response1: ", response);
+      const { isSuccessfull } = response.payload;
+      if (isSuccessfull) {
+        return;
+      }
+    } catch (err) {
+      console.log("err: ");
+    }
+  };
+
   return (
     <>
       <div className="bg-light">
@@ -32,15 +50,23 @@ const Home = () => {
                   <div className=" d-flex align-items-center justify-content-center h-100">
                     <p className="d-flex flex-column mb-0 align-items-center">
                       <span className="h3 text-dark mb-0 font-weight-bold">
-                      <span className="h3 text-dark mb-0 font-weight-bold">Email:</span>  { adminData?.email}<br/> 
-                      <span className="h3 text-dark mb-0 font-weight-bold">Age:</span>  { adminData?.age} <br/>
-                      <span className="h3 text-dark mb-0 font-weight-bold">Address:</span>   { adminData?.address} 
+                        <span className="h3 text-dark mb-0 font-weight-bold">
+                          Email:
+                        </span>{" "}
+                        {adminData?.email}
+                        <br />
+                        <span className="h3 text-dark mb-0 font-weight-bold">
+                          Age:
+                        </span>{" "}
+                        {adminData?.age} <br />
+                        <span className="h3 text-dark mb-0 font-weight-bold">
+                          Address:
+                        </span>{" "}
+                        {adminData?.address}
                       </span>
                     </p>
-                    
                   </div>
                 </NavLink>
-              
               </div>
             </div>
           </div>

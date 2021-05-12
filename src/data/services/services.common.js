@@ -22,7 +22,7 @@ export const get = async (url, headers) => {
     return error(e.response);
   }
 };
-
+  
 export const post = async (url, data, headers) => {
   try {
     let response = await axios.post(url, data, { headers });
@@ -35,4 +35,31 @@ export const post = async (url, data, headers) => {
   }
 };
 
+export const patch = async (url, data, headers) => {
+  try {
+    let response = await axios.patch(url, data, { headers });
 
+    return success(response.data);
+  } catch (e) {
+    return error(e.response);
+  }
+};
+
+export const put = async (url, data, headers) => {
+  try {
+    let response = await axios.put(url, data, { headers });
+
+    return success(response.data);
+  } catch (e) {
+    return error(e.response);
+  }
+};
+
+export const del = async (url, headers) => {
+  try {
+    let response = await axios.delete(url, { headers });
+    return success(response.data);
+  } catch (e) {
+    return error(e.response);
+  }
+};

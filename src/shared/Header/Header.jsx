@@ -11,7 +11,7 @@ const Header = () => {
   
   // console.log("adminSelector: ", adminSelector);
   useEffect(() => {
-    return !adminSelector.isLoggedIn ? history.push("/") : null;
+    return !adminSelector.isLoggedIn ? history.push("/login") : null;
   }, []);
   return (
     <div className="bg-light">
@@ -26,7 +26,7 @@ const Header = () => {
                 className="btn btn-danger btn-sm"
                 onClick={() => {
                   dispatch(logout());
-                  history.push("/");
+                  history.push("/login");
                 }}
               >
                 Logout

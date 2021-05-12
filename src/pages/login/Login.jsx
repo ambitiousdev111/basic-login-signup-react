@@ -51,6 +51,7 @@ const Login = () => {
       if (isSuccessfull) {
         setloader(false);
         history.push("/home");
+        localStorage.setItem("token",response.payload.data.token)
         return alert("Loggedin successfully!");
       }
       setloader(false);
@@ -95,6 +96,7 @@ const Login = () => {
                   }`}
                   name="password"
                   id="password"
+                  type="password"
                   onChange={handleloginChange}
                   placeholder="Enter password.."
                 />
@@ -119,7 +121,7 @@ const Login = () => {
                   disabled={loader}
                   className="btn text-white btn-secondary btn-block form-control-lg"
                   onClick={() => {
-                    history.push("/signup");
+                    history.push("/");
                   }}
                 >
                   Click here to signup
